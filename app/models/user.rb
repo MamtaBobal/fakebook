@@ -6,5 +6,6 @@ class User < ApplicationRecord
 
   # Associations
   has_many :posts
+  has_many :comments
 
 end
