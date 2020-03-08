@@ -35,4 +35,25 @@ class User < ApplicationRecord
   has_many :received_requests, -> { merge(Friendship.not_friends) }, through: :friend_request,
   source: :sent_by
   has_many :notifications, dependent: :destroy
+
+  # Returns a string containing this user's first name and last name
+  def full_name
+    "#{fname} #{lname}"
+  end
+
+  # Returns all posts from this user's friends and self
+  def friends_and_own_posts
+    my_friends = friends
+    our_posts = []
+    my_friends.each do |friend|
+      friend.posts.each do |post|
+        our_posts << post
+      end
+    end
+    posts.each do |post|
+      our_posts << post
+    end
+    our_posts
+  end
+
 end
