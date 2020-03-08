@@ -17,4 +17,5 @@ class User < ApplicationRecord
    source: :sent_to
   has_many :received_requests, -> { merge(Friendship.not_friends) }, through: :friend_request,
   source: :sent_by
+  has_many :notifications, dependent: :destroy
 end
