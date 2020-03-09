@@ -19,11 +19,12 @@ class CommentsController < ApplicationController
   def destroy
 		@comment = Comment.find(params[:id])
 		@post = @comment.post
-		# User can destroy his/her own comments
+		# User can destroy his/her own comments only
 		return unless current_user.id == @comment.user_id
 		if @comment.destroy
 			flash[:success] = 'Comment deleted'
-			redirect_to @post
+			# redirects the browser back to the root_path
+			redirect_back(fallback_location: root_path)
 		else
 			redirect_to @comment
 		end
